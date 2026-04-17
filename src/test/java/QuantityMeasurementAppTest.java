@@ -129,4 +129,125 @@ public class QuantityMeasurementAppTest {
         QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
         assertFalse(q1.equals(null));
     }
+
+    @Test
+    void testEquality_YardToYard_SameValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_YardToYard_DifferentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(2.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_YardToFeet_EquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(3.0, QuantityMeasurementApp.LengthUnit.FEET);
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_FeetToYard_EquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(3.0, QuantityMeasurementApp.LengthUnit.FEET);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_YardToInches_EquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(36.0, QuantityMeasurementApp.LengthUnit.INCH);
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_InchesToYard_EquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(36.0, QuantityMeasurementApp.LengthUnit.INCH);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_YardToFeet_NonEquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(2.0, QuantityMeasurementApp.LengthUnit.FEET);
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_centimetersToInches_EquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(0.393701, QuantityMeasurementApp.LengthUnit.INCH);
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_centimetersToFeet_NonEquivalentValue() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_MultiUnit_TransitiveProperty() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(3.0, QuantityMeasurementApp.LengthUnit.FEET);
+        QuantityMeasurementApp.Quantity q3 = new QuantityMeasurementApp.Quantity(36.0, QuantityMeasurementApp.LengthUnit.INCH);
+        assertTrue(q1.equals(q2));
+        assertTrue(q2.equals(q3));
+        assertTrue(q1.equals(q3));
+    }
+
+    @Test
+    void testEquality_YardWithNullUnit() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(1.0, null);
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_YardSameReference() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertTrue(q1.equals(q1));
+    }
+
+    @Test
+    void testEquality_YardNullComparison() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertFalse(q1.equals(null));
+    }
+
+    @Test
+    void testEquality_CentimetersWithNullUnit() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(1.0, null);
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_CentimetersSameReference() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        assertTrue(q1.equals(q1));
+    }
+
+    @Test
+    void testEquality_CentimetersNullComparison() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        assertFalse(q1.equals(null));
+    }
+
+    @Test
+    void testEquality_AllUnits_ComplexScenario() {
+        QuantityMeasurementApp.Quantity q1 = new QuantityMeasurementApp.Quantity(2.0, QuantityMeasurementApp.LengthUnit.YARDS);
+        QuantityMeasurementApp.Quantity q2 = new QuantityMeasurementApp.Quantity(6.0, QuantityMeasurementApp.LengthUnit.FEET);
+        QuantityMeasurementApp.Quantity q3 = new QuantityMeasurementApp.Quantity(72.0, QuantityMeasurementApp.LengthUnit.INCH);
+        assertTrue(q1.equals(q2));
+        assertTrue(q2.equals(q3));
+        assertTrue(q1.equals(q3));
+    }
 }

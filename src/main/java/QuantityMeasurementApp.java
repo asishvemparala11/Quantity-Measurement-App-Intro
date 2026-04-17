@@ -2,7 +2,9 @@ public class QuantityMeasurementApp {
 
     public enum LengthUnit {
         FEET(12.0),
-        INCH(1.0);
+        INCH(1.0),
+        YARDS(36.0),
+        CENTIMETERS(0.393701);
 
         private final double conversionFactor;
 
@@ -43,7 +45,8 @@ public class QuantityMeasurementApp {
             double thisBaseValue = this.value * this.unit.getConversionFactor();
             double otherBaseValue = other.value * other.unit.getConversionFactor();
 
-            return Double.compare(thisBaseValue, otherBaseValue) == 0;
+            // Using Math.abs to accommodate floating-point rounding precision between conversions
+            return Math.abs(thisBaseValue - otherBaseValue) < 0.0001;
         }
     }
 
@@ -72,9 +75,15 @@ public class QuantityMeasurementApp {
     }
 
     public static void main(String[] args) {
-        System.out.println("Input: Quantity(1.0, \"feet\") and Quantity(12.0, \"inches\")");
-        System.out.println("Output: Equal (" + new Quantity(1.0, LengthUnit.FEET).equals(new Quantity(12.0, LengthUnit.INCH)) + ")");
-        System.out.println("Input: Quantity(1.0, \"inch\") and Quantity(1.0, \"inch\")");
-        System.out.println("Output: Equal (" + new Quantity(1.0, LengthUnit.INCH).equals(new Quantity(1.0, LengthUnit.INCH)) + ")");
+        System.out.println("Input: Quantity(1.0, YARDS) and Quantity(3.0, FEET)");
+        System.out.println("Output: Equal (" + new Quantity(1.0, LengthUnit.YARDS).equals(new Quantity(3.0, LengthUnit.FEET)) + ")");
+        System.out.println("Input: Quantity(1.0, YARDS) and Quantity(36.0, INCHES)");
+        System.out.println("Output: Equal (" + new Quantity(1.0, LengthUnit.YARDS).equals(new Quantity(36.0, LengthUnit.INCH)) + ")");
+        System.out.println("Input: Quantity(2.0, YARDS) and Quantity(2.0, YARDS)");
+        System.out.println("Output: Equal (" + new Quantity(2.0, LengthUnit.YARDS).equals(new Quantity(2.0, LengthUnit.YARDS)) + ")");
+        System.out.println("Input: Quantity(2.0, CENTIMETERS) and Quantity(2.0, CENTIMETERS)");
+        System.out.println("Output: Equal (" + new Quantity(2.0, LengthUnit.CENTIMETERS).equals(new Quantity(2.0, LengthUnit.CENTIMETERS)) + ")");
+        System.out.println("Input: Quantity(1.0, CENTIMETERS) and Quantity(0.393701, INCHES)");
+        System.out.println("Output: Equal (" + new Quantity(1.0, LengthUnit.CENTIMETERS).equals(new Quantity(0.393701, LengthUnit.INCH)) + ")");
     }
 }
