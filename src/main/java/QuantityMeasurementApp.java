@@ -9,32 +9,57 @@ public class QuantityMeasurementApp {
 
         @Override
         public boolean equals(Object obj) {
-            // Step 5 - Equals Method Implementation
-            
-            // Check if the object is the same reference
             if (this == obj) {
                 return true;
             }
 
-            // Check if the object is null or a different type
             if (obj == null || getClass() != obj.getClass()) {
                 return false;
             }
 
-            // Cast to Feet type safely
             Feet feet = (Feet) obj;
-
-            // Compare double values using Double.compare()
             return Double.compare(feet.value, this.value) == 0;
         }
     }
 
+    public static class Inches {
+        private final double value;
+
+        public Inches(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+
+            Inches inches = (Inches) obj;
+            return Double.compare(inches.value, this.value) == 0;
+        }
+    }
+
+    public static boolean checkFeetEquality(double val1, double val2) {
+        Feet f1 = new Feet(val1);
+        Feet f2 = new Feet(val2);
+        return f1.equals(f2);
+    }
+
+    public static boolean checkInchesEquality(double val1, double val2) {
+        Inches i1 = new Inches(val1);
+        Inches i2 = new Inches(val2);
+        return i1.equals(i2);
+    }
+
     public static void main(String[] args) {
-        // Step 6 - Main Method
-        Feet f1 = new Feet(1.0);
-        Feet f2 = new Feet(1.0);
-        
+        System.out.println("Input: 1.0 inch and 1.0 inch");
+        System.out.println("Output: Equal (" + checkInchesEquality(1.0, 1.0) + ")");
         System.out.println("Input: 1.0 ft and 1.0 ft");
-        System.out.println("Output: Equal (" + f1.equals(f2) + ")");
+        System.out.println("Output: Equal (" + checkFeetEquality(1.0, 1.0) + ")");
     }
 }
